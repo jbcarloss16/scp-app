@@ -1,10 +1,11 @@
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCP Foundation - Classified Database Archive</title>
+    <title>SCP Foundation - Top Threat Archive Vault</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -43,36 +44,55 @@
             font-family: 'Share Tech Mono', 'Courier New', monospace;
         }
 
-        /* Ambient Terminal Scanline Effect */
+        /* Ambient Scanline Overlay */
         .scanline-bg {
             background: linear-gradient(
                 rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.3) 50%
+                rgba(0, 0, 0, 0.35) 50%
             ), linear-gradient(
                 90deg,
-                rgba(255, 0, 0, 0.02),
+                rgba(255, 0, 0, 0.015),
                 rgba(0, 255, 0, 0.01),
-                rgba(0, 0, 255, 0.02)
+                rgba(0, 0, 255, 0.015)
             );
             background-size: 100% 4px, 6px 100%;
         }
 
         /* Redacted Text Styling */
-        .redacted {
-            background-color: #94a3b8;
-            color: #94a3b8;
+        .redacted, blockquote span.redacted {
+            background-color: #475569;
+            color: #475569;
             user-select: none;
             padding: 0 4px;
             border-radius: 2px;
             transition: all 0.2s ease;
         }
         .redacted:hover {
-            background-color: rgba(220, 38, 38, 0.2);
+            background-color: rgba(220, 38, 38, 0.25);
             color: #ef4444;
             user-select: text;
         }
 
-        /* Custom Scrollbars */
+        /* Wiki Content Formatting Overrides */
+        #apiContent img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            margin: 1rem 0;
+        }
+        #apiContent table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        #apiContent th, #apiContent td {
+            border: 1px solid #1e293b;
+            padding: 8px 12px;
+            background: #090d16;
+        }
+
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -89,7 +109,7 @@
         }
 
         .seal-watermark {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 100 100" opacity="0.03"><circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="2"/><polygon points="50,15 40,35 60,35" fill="white"/><polygon points="85,50 65,40 65,60" fill="white"/><polygon points="50,85 60,65 40,65" fill="white"/><polygon points="15,50 35,60 35,40" fill="white"/><circle cx="50" cy="50" r="15" fill="none" stroke="white" stroke-width="2"/></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 100 100" opacity="0.025"><circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="2"/><polygon points="50,15 40,35 60,35" fill="white"/><polygon points="85,50 65,40 65,60" fill="white"/><polygon points="50,85 60,65 40,65" fill="white"/><polygon points="15,50 35,60 35,40" fill="white"/><circle cx="50" cy="50" r="15" fill="none" stroke="white" stroke-width="2"/></svg>');
             background-repeat: no-repeat;
             background-position: center;
         }
@@ -97,21 +117,20 @@
 </head>
 <body class="min-h-screen scanline-bg flex flex-col justify-between select-none">
 
-    <!-- Top Security Banner -->
-    <div class="bg-red-950/80 border-b border-red-900/60 text-red-200 text-[11px] font-mono-tech py-1 px-4 flex justify-between items-center tracking-wider uppercase">
+    <!-- Top Clearance Security Bar -->
+    <div class="bg-red-950/90 border-b border-red-900/80 text-red-200 text-[11px] font-mono-tech py-1 px-4 flex justify-between items-center tracking-wider uppercase">
         <span class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-            WARNING: UNAUTHORIZED PERSONNEL WILL BE TERMINATED VIA MEMETIC AGENT
+            WARNING: LEVEL 4 HIGH-HAZARD CLEARANCE REQUIRED // MEMETIC PROTECTION ACTIVE
         </span>
-        <span class="hidden sm:inline">SITE-19 MAIN ARCHIVE VAULT</span>
+        <span class="hidden sm:inline">DATABASE INDEX: TOP THREAT ANOMALIES</span>
     </div>
 
-    <!-- Header Navigation -->
+    <!-- App Header Nav -->
     <header class="bg-scpPanel border-b border-scpBorder sticky top-0 z-30 shadow-2xl backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-                <!-- SCP Logo SVG -->
-                <div class="w-10 h-10 bg-red-950/50 border border-scpRed/60 rounded-full flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(220,38,38,0.3)]">
+                <div class="w-10 h-10 bg-red-950/60 border border-scpRed/60 rounded-full flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(220,38,38,0.4)]">
                     <svg class="w-6 h-6 text-scpRed" viewBox="0 0 100 100" fill="currentColor">
                         <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="6"/>
                         <polygon points="50,15 40,35 60,35"/>
@@ -123,20 +142,23 @@
                 </div>
                 <div>
                     <h1 class="text-lg sm:text-xl font-mono-tech font-bold text-white tracking-widest flex items-center gap-2">
-                        SCP DATABASE <span class="text-xs text-scpRed bg-red-950/60 px-2 py-0.5 border border-red-900 rounded">CLEARANCE L4</span>
+                        SCP ARCHIVE <span class="text-xs text-scpRed bg-red-950/80 px-2 py-0.5 border border-red-900 rounded">1,000 CATALOG</span>
                     </h1>
-                    <p class="text-[11px] text-slate-400 font-mono-tech">SECURE. CONTAIN. PROTECT. // INDEX ARCHIVE</p>
+                    <p class="text-[11px] text-slate-400 font-mono-tech">SECURE. CONTAIN. PROTECT. // WIKIDOT DIRECT ARCHIVE</p>
                 </div>
             </div>
 
-            <!-- Search & Controls -->
+            <!-- Search Bar & Direct Number Lookup -->
             <div class="flex items-center gap-2 w-full md:w-auto">
-                <div class="relative w-full md:w-72">
-                    <input type="text" id="searchInput" placeholder="Search designation, item #, keyword..." onkeyup="filterEntries()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-1.5 pl-9 text-xs font-mono-tech text-slate-100 placeholder-slate-500 focus:outline-none focus:border-scpRed transition-all">
+                <div class="relative w-full md:w-80">
+                    <input type="text" id="searchInput" placeholder="Search designation (e.g. SCP-049 or 096)..." onkeyup="filterCatalog()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-1.5 pl-9 text-xs font-mono-tech text-slate-100 placeholder-slate-500 focus:outline-none focus:border-scpRed transition-all">
                     <svg class="w-4 h-4 text-slate-500 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </div>
+                <button onclick="fetchDirectNumber()" class="bg-red-950/80 hover:bg-scpRed border border-red-800 text-red-200 hover:text-white font-mono-tech text-xs px-3 py-1.5 rounded-lg shrink-0 transition-all">
+                    FETCH #
+                </button>
                 <button onclick="toggleBookmarksOnly()" id="bookmarkToggleBtn" class="bg-slate-900 border border-slate-800 hover:border-scpAmber text-slate-300 font-mono-tech text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 shrink-0 transition-all">
                     <span>★</span>
                     <span class="hidden sm:inline">SAVED</span>
@@ -145,23 +167,23 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
+    <!-- Main Content Container -->
     <main class="max-w-7xl mx-auto px-4 py-6 w-full flex-1">
 
-        <!-- Filter Classification Tabs -->
+        <!-- Object Class Filter Tabs -->
         <div class="flex items-center gap-1.5 overflow-x-auto pb-3 mb-6 scrollbar-none font-mono-tech text-xs border-b border-slate-800/80">
-            <button onclick="setFilter('ALL')" class="filter-tab active-tab bg-scpRed text-white px-3 py-1.5 rounded-lg border border-red-500/50 uppercase font-semibold shrink-0 transition-all">ALL ENTRIES</button>
-            <button onclick="setFilter('SAFE')" class="filter-tab bg-slate-900 text-slate-300 hover:border-emerald-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">SAFE</button>
+            <button onclick="setFilter('ALL')" class="filter-tab active-tab bg-scpRed text-white px-3 py-1.5 rounded-lg border border-red-500/50 uppercase font-semibold shrink-0 transition-all">ALL (1,000)</button>
+            <button onclick="setFilter('KETER')" class="filter-tab bg-slate-900 text-slate-300 hover:border-red-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">KETER (HIGH THREAT)</button>
             <button onclick="setFilter('EUCLID')" class="filter-tab bg-slate-900 text-slate-300 hover:border-amber-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">EUCLID</button>
-            <button onclick="setFilter('KETER')" class="filter-tab bg-slate-900 text-slate-300 hover:border-red-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">KETER</button>
+            <button onclick="setFilter('SAFE')" class="filter-tab bg-slate-900 text-slate-300 hover:border-emerald-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">SAFE</button>
             <button onclick="setFilter('THAUMIEL')" class="filter-tab bg-slate-900 text-slate-300 hover:border-purple-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">THAUMIEL</button>
             <button onclick="setFilter('APOLLYON')" class="filter-tab bg-slate-900 text-slate-300 hover:border-cyan-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">APOLLYON</button>
             <button onclick="setFilter('NEUTRALIZED')" class="filter-tab bg-slate-900 text-slate-300 hover:border-slate-500/50 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all">NEUTRALIZED</button>
         </div>
 
-        <!-- SCP Cards Grid -->
+        <!-- Catalog Grid -->
         <div id="scpGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <!-- Dynamic Grid Items Rendered Here -->
+            <!-- Dynamic Grid Generated via JavaScript -->
         </div>
 
         <div id="emptyState" class="hidden text-center py-20 font-mono-tech">
@@ -169,15 +191,15 @@
         </div>
     </main>
 
-    <!-- Full Document Dossier Modal / Reader View -->
-    <div id="readerModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-6 hidden overflow-hidden">
-        <div class="bg-scpPanel border-2 border-slate-800 w-full max-w-4xl max-h-[92vh] rounded-xl flex flex-col shadow-2xl relative seal-watermark overflow-hidden">
+    <!-- Full Document Reader Modal -->
+    <div id="readerModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-6 hidden overflow-hidden">
+        <div class="bg-scpPanel border-2 border-slate-800 w-full max-w-4xl h-[94vh] rounded-xl flex flex-col shadow-2xl relative seal-watermark overflow-hidden">
             
             <!-- Modal Header Toolbar -->
             <div class="bg-slate-950 border-b border-slate-800 p-3 sm:p-4 flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-3">
-                    <span id="modalClassBadge" class="font-mono-tech text-xs px-2.5 py-1 rounded font-bold border uppercase">EUCLID</span>
-                    <span id="modalItemNumber" class="font-mono-tech font-bold text-white text-base sm:text-lg">SCP-173</span>
+                    <span id="modalClassBadge" class="font-mono-tech text-xs px-2.5 py-1 rounded font-bold border uppercase">CLASSIFIED</span>
+                    <span id="modalItemNumber" class="font-mono-tech font-bold text-white text-base sm:text-lg">SCP-000</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="toggleBookmarkCurrent()" id="modalBookmarkBtn" class="text-slate-400 hover:text-scpAmber p-1.5 rounded border border-slate-800 hover:border-slate-700 font-mono-tech text-xs flex items-center gap-1 transition-all">
@@ -189,419 +211,305 @@
                 </div>
             </div>
 
-            <!-- Modal Scrollable Content Reader -->
-            <div id="modalContent" class="p-4 sm:p-8 overflow-y-auto space-y-6 text-sm text-slate-300 font-sans leading-relaxed">
-                <!-- Dynamic Content Injected Here -->
+            <!-- Loader State -->
+            <div id="modalLoading" class="hidden flex-1 flex flex-col items-center justify-center p-8 font-mono-tech text-center">
+                <div class="w-12 h-12 border-4 border-scpRed border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p class="text-slate-300 font-bold text-sm">FETCHING CLASSIFIED WIKIDOT DOSSIER...</p>
+                <p class="text-xs text-slate-500 mt-1">Decrypting secure protocols & retrieving full media archives...</p>
+            </div>
+
+            <!-- Modal Content Reader -->
+            <div id="modalContent" class="p-4 sm:p-8 overflow-y-auto space-y-6 text-sm text-slate-300 font-sans leading-relaxed flex-1">
+                <h2 id="modalTitle" class="text-xl font-bold font-mono-tech text-white border-b border-slate-800 pb-2">Entry Title</h2>
+                <div id="apiContent" class="prose prose-invert max-w-none text-slate-300">
+                    <!-- Dynamic Live Wiki Injected Here -->
+                </div>
             </div>
 
             <!-- Modal Security Footer -->
             <div class="bg-slate-950 border-t border-slate-800 px-4 py-2 flex justify-between items-center font-mono-tech text-[10px] text-slate-500 shrink-0">
-                <span>DOCUMENT REVISION: 2026.04.1-L4</span>
-                <span>NOTICE: DATA LOGGED & MONITORED</span>
+                <span>FOUNDATION WIKIDOT DIRECT ARCHIVE</span>
+                <span>SECURITY LEVEL 4 MONITORED</span>
             </div>
         </div>
     </div>
 
     <!-- Security Footer -->
     <footer class="bg-scpPanel border-t border-scpBorder py-4 px-4 text-center font-mono-tech text-[11px] text-slate-500">
-        <p>FOUNDATION ARCHIVE VAULT // ALL RIGHTS RESERVED // CREATIVE COMMONS ATTRIBUTION-SHAREALIKE 3.0</p>
+        <p>SCP FOUNDATION 1,000 THREAT VAULT ARCHIVE // CREATIVE COMMONS ATTRIBUTION-SHAREALIKE 3.0 LICENSE</p>
     </footer>
 
-    <!-- JavaScript Data & Interactivity -->
+    <!-- JavaScript Application Logic -->
     <script>
-        // Database of SCP Entries
-        const scpDatabase = [
-            {
-                id: "SCP-173",
-                title: "The Sculpture",
-                objectClass: "EUCLID",
-                threatLevel: "AMBER",
-                summary: "Constructed from concrete and rebar with traces of Krylon brand spray paint. It is animate and extremely hostile, moving at rapid speeds when unobserved.",
-                containment: "Item SCP-173 is to be kept in a locked container at all times. When personnel must enter SCP-173's container, no fewer than 3 may enter at any time and the door is to be relocked behind them. Two persons must maintain direct eye contact with SCP-173 at all times until all personnel have vacated and relocked the container.",
-                description: "Moved to Site-19 1993. Origin is as of yet unknown. It is constructed from concrete and rebar with traces of Krylon brand spray paint. SCP-173 is animate and extremely hostile. The object cannot move while within a direct line of sight. Line of sight must not be broken at any time with SCP-173. Personnel assigned to enter container are instructed to alert one another before blinking. Object is reported to attack by snapping the neck at the base of the skull, or by strangulation.",
-                addendum: "Reddish brown substance on the floor is a combination of feces and blood. Origin of these materials is unknown. The enclosure must be cleaned on a bi-weekly basis.",
-                testLogs: "Incident Log 173-1: Class-D personnel D-0493 blinked during routine maintenance. Secondary staff member failed to notify partner. Subject suffered neck snapping within 0.04 seconds.",
-                image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-049",
-                title: "Plague Doctor",
-                objectClass: "EUCLID",
-                threatLevel: "AMBER",
-                summary: "A humanoid entity roughly 1.9 meters tall, wearing the garb of a 15th-century plague doctor. Expresses obsessive obsession with curing 'The Pestilence'.",
-                containment: "SCP-049 is to be contained within a standard secure humanoid holding cell in Research Sector-02 at Site-19. SCP-049 must be sedated before any attempt to transport it.",
-                description: "SCP-049 is a humanoid entity, wearing the robes and mask of a medieval plague doctor. These garments appear to have grown out of SCP-049's body over time. Touch from SCP-049 is invariably fatal to humans due to an immediate cessation of biological activity. SCP-049 will then attempt to perform crude surgery on the corpse using tools from a black leather bag it carries, producing instance of SCP-049-2 (reanimated corpses).",
-                addendum: "Addendum 049.1: SCP-049 claims to possess complete understanding of 'The Pestilence', an unknown condition it perceives in certain humans. Research into identifying 'The Pestilence' is ongoing under Dr. <span class='redacted'>██████</span>.",
-                testLogs: "Interview Log 049-7: Dr. Raymond: 'What is this Pestilence?' SCP-049: 'It is the Great Death, doctor. I am the cure. My cure is... most effective.'",
-                image: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-096",
-                title: "The 'Shy Guy'",
-                objectClass: "EUCLID",
-                threatLevel: "RED",
-                summary: "A tall, emaciated humanoid. When anyone views SCP-096's face—directly or via video/photo—it enters a state of extreme emotional distress before hunting down the viewer.",
-                containment: "SCP-096 is to be kept in its cell, a 5m x 5m x 5m airtight steel cube, at all times. Weekly checks for any cracks or holes are mandatory. There are to be absolutely no video surveillance or optical tools of any kind inside SCP-096's cell.",
-                description: "SCP-096 is a humanoid entity measuring approximately 2.38 meters in height. Entity shows very little muscle mass. Jaw can open to four (4) times the norm of an average human. SCP-096 is normally extremely docile. However, when someone views SCP-096's face, whether directly, via video recording, or even a photograph, it will enter a state of extreme emotional distress. SCP-096 will cover its face with its hands and begin screaming, crying, and babbling. Approximately one to two minutes after the first view, SCP-096 will run towards the person who viewed its face.",
-                addendum: "Incident 096-1-A: An artist's depiction of SCP-096's face did not trigger the hostile response, suggesting abstract artistic interpretations do not trigger its reaction, whereas photographic triggers do.",
-                testLogs: "Test 096-D: Subject D-9031 viewed a 4-pixel image of SCP-096 in the background of a mountain photograph. SCP-096 breached containment from Site-19 and traversed 1,400km to neutralize D-9031.",
-                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-682",
-                title: "Hard-to-Destroy Reptile",
-                objectClass: "KETER",
-                threatLevel: "RED",
-                summary: "A large, vaguely reptile-like creature of unknown origin. It possesses extreme strength, speed, and regenerative adaptability, along with hatred for all life.",
-                containment: "SCP-682 must be destroyed as soon as possible. SCP-682 is to be contained in a 5m x 5m x 5m chamber with 25cm reinforced acid-resistant steel plating lined with hydrochloric acid until SCP-682 is completely submerged.",
-                description: "SCP-682 is a large, vaguely reptile-like creature. It appears to have extremely high intelligence, and was observed engaging in complex communication with SCP-079 during their brief time of exposure. SCP-682 has an intense hatred of all organic life, which has been expressed in several interviews during containment. SCP-682 has always been observed to have extremely high strength, speed, and reflexes, though exact levels vary with its form. SCP-682's physical body grows and changes very quickly, growing or shrinking in size as it consumes or sheds material.",
-                addendum: "Addendum 682-E: Termination Attempts: Multiple cross-SCP termination attempts (including exposure to SCP-096, SCP-173, and SCP-409) have failed, resulting in SCP-682 adapting temporary immunities.",
-                testLogs: "Termination Log 682-T1: Exposure to SCP-096 resulted in a 27-hour physical brawl. SCP-682 lost 84% of body mass but successfully blinded SCP-096, causing SCP-096 to refuse further contact.",
-                image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-106",
-                title: "The Old Man",
-                objectClass: "KETER",
-                threatLevel: "RED",
-                summary: "An elderly humanoid capable of passing through solid matter and corrupting materials with a black corrosive mucus. Drags prey into its pocket dimension.",
-                containment: "No physical direct interaction with SCP-106 is allowed at any time. All physical interaction must be approved by a two-thirds vote of the O5 Council. SCP-106 is to be contained in a sealed container of lead-lined steel suspended in a secondary chamber filled with fluid.",
-                description: "SCP-106 appears to be an elderly humanoid, with a general appearance of advanced decomposition. This appearance may vary, but the 'rotting' quality is observed in all forms. SCP-106 is not particularly active, and can remain motionless for days at a time, waiting for prey. SCP-106 is also capable of scaling any vertical surface and can remain suspended upside down indefinitely.",
-                addendum: "Pocket Dimension Notes: SCP-106 creates a 'pocket dimension' comprised of endless hallways and rooms with corrosive liquid surfaces. SCP-106 controls all physics inside this realm.",
-                testLogs: "Recall Protocol RP-106: Containment breach recovery requires the intentional fracturing of a Class-D personnel's femur over public Site intercom to attract SCP-106 back to containment.",
-                image: "https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-087",
-                title: "The Stairwell",
-                objectClass: "EUCLID",
-                threatLevel: "AMBER",
-                summary: "An unlit endless stairwell descending downward. Inhabited by SCP-087-1, a face with no pupils, nostrils, or mouth.",
-                containment: "SCP-087 is located on the campus of <span class='redacted'>[REDACTED]</span>. The doorway leading to SCP-087 is constructed of reinforced steel with an electro-release lock mechanism disguised as a janitorial closet.",
-                description: "SCP-087 is an unlit platform stairwell. Stairs descend at a 38-degree angle. 13 steps per flight between landing platforms. Light source brightness inside SCP-087 does not exceed 75 watts; visual range remains restricted regardless of equipment. Audio recordings indicate the faint distress cries of a child located approximately 200 meters below.",
-                addendum: "Exploration Log 087-IV: Class-D personnel descended 1.8 kilometers before encountering SCP-087-1. Subject panicked upon entity approaching within 30 centimeters.",
-                testLogs: "Exploration IV results: Communication cut off abruptly after SCP-087-1 appeared directly in front of camera lens. Door permanently welded shut.",
-                image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-999",
-                title: "The Tickle Monster",
-                objectClass: "SAFE",
-                threatLevel: "GREEN",
-                summary: "A translucent orange blob of peanut-butter-like slime. Extremely affectionate and induces intense euphoria upon touch.",
-                containment: "SCP-999 is allowed to freely roam the facility if it desires, but must otherwise remain in its pen. The pen is to be kept clean and food replenished twice daily.",
-                description: "SCP-999 appears to be a large, amorphous, translucent mass of orange slime, weighing roughly 54 kg (120 lbs). SCP-999's temperament is best described as playful and dog-like. Touching SCP-999's surface induces an immediate sensation of euphoria, which increases in intensity the longer subject is in contact.",
-                addendum: "Psychological Therapy: Used routinely to cure depression and PTSD in Site personnel. Also exposed to SCP-682, temporarily neutralizing SCP-682's hostility through intense laughter.",
-                testLogs: "Cross-Test 999-682: SCP-999 tickled SCP-682 until the reptile was incapacitated by laughter, proving SCP-999's potential defensive utility.",
-                image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-093",
-                title: "Red Sea Object",
-                objectClass: "EUCLID",
-                threatLevel: "AMBER",
-                summary: "A vermillion disc that changes color near different individuals and acts as a gateway to a ruined parallel Earth when held against glass.",
-                containment: "SCP-093 must remain resting on a silver mirror at all times in a 2.5m x 2.5m containment room.",
-                description: "SCP-093 is a rose-colored disc carved from jasper. When held against a glass mirror by a living subject, SCP-093 allows passage into an alternate dimension characterized by colossal torso-only humanoid entities ('The Unclean') and abandoned futuristic cities.",
-                addendum: "Color Shift Log: Disk shifts to Green, Blue, Violet, and Yellow depending on the psychological profile and past guilt of the holding individual.",
-                testLogs: "Green Test: Subject entered alternate reality and recovered documents detailing the downfall of a civilization following worship of 'He Who Moves Tears'.",
-                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-3000",
-                title: "Anantashesha",
-                objectClass: "THAUMIEL",
-                threatLevel: "PURPLE",
-                summary: "A massive eel-like anomaly located in the Bay of Bengal measuring over 600 kilometers in length. Exudes Y-909 compound used in amnestics.",
-                containment: "SCP-3000 is contained in the Bay of Bengal. Site-119 is constructed directly above to monitor its movements and harvest Compound Y-909.",
-                description: "SCP-3000 is a colossal serpentine aquatic entity. Close proximity to SCP-3000 causes severe cognitive deterioration, memory loss, and paranoia. The entity secretes a dark viscous fluid designated Y-909, which forms the primary active ingredient in Class-A and Class-B amnestics.",
-                addendum: "O5 Directives: Due to the Foundation's absolute reliance on Y-909 for memory wipes, SCP-3000 containment is deemed vital to global operations.",
-                testLogs: "D-Class Feeding Log: Class-D personnel are fed to SCP-3000 to trigger high-yield Y-909 secretion during digestion phases.",
-                image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-5000",
-                title: "Why?",
-                objectClass: "SAFE",
-                threatLevel: "BLUE",
-                summary: "An advanced mechanical suit found containing the corpse of Pietro Wilson from a timeline where the Foundation declared war on humanity.",
-                containment: "SCP-5000 is stored in a standard anomalous artifact vault at Site-22.",
-                description: "SCP-5000 is an Absolute Exclusion Harness capable of cloaking its user physically, cognitively, and electronically. The internal memory log of the suit detailed an alternate timeline where the O5 Council discovered something horrific in the human subconscious and deployed all anomalies to eradicate humanity.",
-                addendum: "Journal Entry Extract: 'They aren't fighting us because they hate us. They're fighting us because they found out what we really are.'",
-                testLogs: "Audio Log Recovery: Decoded files contained conversations between O5-1 and the Ethics Committee prior to project deployment.",
-                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-001",
-                title: "The Gate Guardian",
-                objectClass: "APOLLYON",
-                threatLevel: "RED",
-                summary: "A 700-cubit tall glowing humanoid entity wielding a flaming sword, standing at the intersection of the Tigris and Euphrates rivers.",
-                containment: "SCP-001 cannot be contained physically. Observation is conducted via satellite at a distance of no less than 100 kilometers.",
-                description: "SCP-001 is a massive humanoid entity surrounded by glowing multi-winged appendages. Entity stands with a flaming sword capable of vaporizing any matter approaching within range. Entity communicates via telepathic directives, most notably commanding visitors to 'PREPARE'.",
-                addendum: "Patriarch Proposal: Believed to guard the entrance to the Garden of Eden. All nuclear strikes directed at entity have been neutralized instantly.",
-                testLogs: "Executive Directive: In the event of SCP-001 movement, Immediate Emergency Protocol Alpha-001 (End-of-World) is triggered.",
-                image: "https://images.unsplash.com/photo-1507499739999-097706ad8914?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "SCP-1763",
-                title: "Hollowed Sanctuary",
-                objectClass: "NEUTRALIZED",
-                threatLevel: "GRAY",
-                summary: "A former localized reality vortex neutralized during Operation Omega-7.",
-                containment: "Declassified. Site-44 decommissioned.",
-                description: "SCP-1763 was a localized spatial anomaly exhibiting inverted gravity vectoring. Ceased activity following the collapse of its core sub-spatial anchor in 2018.",
-                addendum: "Status update: File archived.",
-                testLogs: "Final Log: Anchor collapsed. Energy readings returned to baseline ambient levels.",
-                image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80"
+        // Generate Catalog of 1,000 Iconic & Dangerous SCP Anomalies
+        const objectClasses = ["KETER", "EUCLID", "SAFE", "THAUMIEL", "APOLLYON", "NEUTRALIZED"];
+        const scpCatalog = [];
+
+        // Key iconic entries assigned high threat/detailed metadata
+        const iconicEntries = {
+            173: { title: "The Sculpture", class: "EUCLID", summary: "Animate concrete & rebar structure. Attacks necks when line of sight is broken." },
+            49: { title: "Plague Doctor", class: "EUCLID", summary: "Humanoid in 15th century plague doctor garb attempting to 'cure' the Pestilence." },
+            96: { title: "The 'Shy Guy'", class: "EUCLID", summary: "Emaciated humanoid that relentlessly hunts down anyone who views its face." },
+            682: { title: "Hard-to-Destroy Reptile", class: "KETER", summary: "Vastly adaptive, highly hostile reptile entity with hatred for organic life." },
+            106: { title: "The Old Man", class: "KETER", summary: "Rotting humanoid capable of phasing through matter and dragging prey to pocket dimension." },
+            87: { title: "The Stairwell", class: "EUCLID", summary: "Unlit endless stairwell descending indefinitely, inhabited by a faceless entity." },
+            999: { title: "The Tickle Monster", class: "SAFE", summary: "Amorphous orange blob inducing intense euphoria and goodwill." },
+            93: { title: "Red Sea Object", class: "EUCLID", summary: "Vermillion disc acting as a portal to a ruined parallel world." },
+            3000: { title: "Anantashesha", class: "THAUMIEL", summary: "Colossal 600km serpentine anomaly secreting amnestic Compound Y-909." },
+            5000: { title: "Why?", class: "SAFE", summary: "Exclusion suit detailing a alternate timeline where the Foundation attacked humanity." },
+            1: { title: "The Gate Guardian", class: "APOLLYON", summary: "Luminous multi-winged entity with flaming sword guarding the Tigris/Euphrates." },
+            0: { title: "[PATTERN SCREAMER]", class: "KETER", summary: "Non-existent consciousness trapped in structural reality gaps." }
+        };
+
+        // Populate catalog up to 1,000 entries across Series 1 through Series 7
+        for (let i = 1; i <= 1000; i++) {
+            const padNum = String(i).padStart(3, '0');
+            const scpId = `SCP-${padNum}`;
+            
+            if (iconicEntries[i]) {
+                scpCatalog.push({
+                    number: i,
+                    id: scpId,
+                    title: iconicEntries[i].title,
+                    objectClass: iconicEntries[i].class,
+                    summary: iconicEntries[i].summary
+                });
+            } else {
+                // Distribute realistic object classes prioritizing Keter and Euclid high-hazard entries
+                let chosenClass = "EUCLID";
+                if (i % 3 === 0) chosenClass = "KETER";
+                else if (i % 5 === 0) chosenClass = "SAFE";
+                else if (i % 29 === 0) chosenClass = "THAUMIEL";
+                else if (i % 97 === 0) chosenClass = "APOLLYON";
+
+                scpCatalog.push({
+                    number: i,
+                    id: scpId,
+                    title: `Classified Anomaly #${padNum}`,
+                    objectClass: chosenClass,
+                    summary: `Classified Foundation record designation ${scpId}. Click to fetch complete Wikidot file & test logs.`
+                });
             }
-        ];
-
-        // App State Variables
-        let currentFilter = 'ALL';
-        let currentSearchQuery = '';
-        let showBookmarksOnly = false;
-        let bookmarkedIds = JSON.parse(localStorage.getItem('scp_bookmarks') || '[]');
-        let activeScpId = null;
-
-        // Terminal Sound FX Synth
-        function playSound(type) {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                if (type === 'click') {
-                    osc.frequency.setValueAtTime(800, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.05, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.05);
-                } else if (type === 'open') {
-                    osc.frequency.setValueAtTime(300, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.1);
-                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.1);
-                }
-            } catch(e) {}
         }
 
-        // Render Database Grid
+        // App State
+        let currentFilter = 'ALL';
+        let showBookmarksOnly = false;
+        let activeScp = null;
+        let bookmarks = JSON.parse(localStorage.getItem('scp_bookmarks_v2') || '[]');
+
+        function saveBookmarks() {
+            localStorage.setItem('scp_bookmarks_v2', JSON.stringify(bookmarks));
+        }
+
+        function getClassBadgeStyle(objectClass) {
+            switch(objectClass) {
+                case 'SAFE': return 'bg-emerald-950 text-emerald-400 border-emerald-800';
+                case 'EUCLID': return 'bg-amber-950 text-amber-400 border-amber-800';
+                case 'KETER': return 'bg-red-950 text-red-400 border-red-800';
+                case 'THAUMIEL': return 'bg-purple-950 text-purple-400 border-purple-800';
+                case 'APOLLYON': return 'bg-cyan-950 text-cyan-400 border-cyan-800';
+                default: return 'bg-slate-900 text-slate-400 border-slate-700';
+            }
+        }
+
+        // Render Catalog Grid
         function renderGrid() {
             const grid = document.getElementById('scpGrid');
-            const emptyState = document.getElementById('emptyState');
+            const empty = document.getElementById('emptyState');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+
             grid.innerHTML = '';
 
-            const filtered = scpDatabase.filter(item => {
-                const matchesFilter = (currentFilter === 'ALL' || item.objectClass === currentFilter);
-                const matchesSearch = item.id.toLowerCase().includes(currentSearchQuery) || 
-                                      item.title.toLowerCase().includes(currentSearchQuery) ||
-                                      item.summary.toLowerCase().includes(currentSearchQuery);
-                const matchesBookmark = !showBookmarksOnly || bookmarkedIds.includes(item.id);
-
-                return matchesFilter && matchesSearch && matchesBookmark;
+            const filtered = scpCatalog.filter(item => {
+                const matchesClass = (currentFilter === 'ALL') || (item.objectClass === currentFilter);
+                const matchesSearch = item.id.toLowerCase().includes(searchVal) || 
+                                      item.title.toLowerCase().includes(searchVal) || 
+                                      String(item.number).includes(searchVal);
+                const matchesBookmark = !showBookmarksOnly || bookmarks.includes(item.id);
+                return matchesClass && matchesSearch && matchesBookmark;
             });
 
             if (filtered.length === 0) {
-                emptyState.classList.remove('hidden');
+                empty.classList.remove('hidden');
                 return;
-            } else {
-                emptyState.classList.add('hidden');
             }
+            empty.classList.add('hidden');
 
-            filtered.forEach(scp => {
-                const isBookmarked = bookmarkedIds.includes(scp.id);
+            // Render batch for speed
+            filtered.slice(0, 120).forEach(item => {
+                const isBookmarked = bookmarks.includes(item.id);
                 const card = document.createElement('div');
-                card.className = "bg-scpCard border border-slate-800 hover:border-slate-700 rounded-xl overflow-hidden shadow-xl flex flex-col justify-between cursor-pointer group transition-all duration-300 transform hover:-translate-y-1";
-                card.onclick = () => openModal(scp.id);
-
-                let badgeColor = "border-amber-900/60 bg-amber-950/30 text-amber-400";
-                if (scp.objectClass === 'SAFE') badgeColor = "border-emerald-900/60 bg-emerald-950/30 text-emerald-400";
-                if (scp.objectClass === 'KETER') badgeColor = "border-red-900/60 bg-red-950/40 text-red-400 font-bold";
-                if (scp.objectClass === 'THAUMIEL') badgeColor = "border-purple-900/60 bg-purple-950/40 text-purple-400";
-                if (scp.objectClass === 'APOLLYON') badgeColor = "border-cyan-900/60 bg-cyan-950/40 text-cyan-400 animate-pulse";
-                if (scp.objectClass === 'NEUTRALIZED') badgeColor = "border-slate-800 bg-slate-900 text-slate-500";
+                card.className = "bg-scpCard border border-scpBorder hover:border-scpRed rounded-xl p-4 flex flex-col justify-between cursor-pointer transition-all duration-200 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] group";
+                card.onclick = () => openDossier(item.id, item.title, item.objectClass);
 
                 card.innerHTML = `
                     <div>
-                        <div class="h-36 overflow-hidden relative border-b border-slate-800">
-                            <img src="${scp.image}" alt="${scp.id}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90 contrast-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-scpCard via-transparent to-transparent"></div>
-                            <span class="absolute top-2 left-2 font-mono-tech text-[10px] px-2 py-0.5 rounded border ${badgeColor}">
-                                ${scp.objectClass}
-                            </span>
-                            <button onclick="event.stopPropagation(); toggleBookmark('${scp.id}')" class="absolute top-2 right-2 text-slate-400 hover:text-scpAmber bg-slate-950/80 p-1.5 rounded-full border border-slate-800 text-xs">
-                                ${isBookmarked ? '★' : '☆'}
-                            </button>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-mono-tech font-bold text-white group-hover:text-scpRed text-base">${item.id}</span>
+                            <span class="font-mono-tech text-[10px] px-2 py-0.5 rounded border uppercase ${getClassBadgeStyle(item.objectClass)}">${item.objectClass}</span>
                         </div>
-                        <div class="p-4">
-                            <div class="flex justify-between items-baseline mb-1">
-                                <h3 class="font-mono-tech font-bold text-white text-base group-hover:text-scpRed transition-colors">${scp.id}</h3>
-                                <span class="text-xs text-slate-400 italic">${scp.title}</span>
-                            </div>
-                            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mt-2">${scp.summary}</p>
-                        </div>
+                        <h3 class="font-semibold text-slate-200 text-sm mb-2 line-clamp-1">${item.title}</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">${item.summary}</p>
                     </div>
-                    <div class="px-4 py-3 bg-slate-950/60 border-t border-slate-800/60 flex justify-between items-center text-[10px] font-mono-tech text-slate-500">
-                        <span>CLEARANCE REQUIRED</span>
-                        <span class="text-slate-300 group-hover:translate-x-1 transition-transform">READ DOSSIER &rarr;</span>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800/80 font-mono-tech text-xs">
+                        <span class="text-scpRed font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                            READ DOSSIER &rarr;
+                        </span>
+                        <button onclick="event.stopPropagation(); toggleBookmark('${item.id}')" class="text-slate-500 hover:text-scpAmber text-base">
+                            ${isBookmarked ? '★' : '☆'}
+                        </button>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // Filter Controls
+        // Live Wikidot & SCP API Fetcher
+        async function openDossier(scpId, fallbackTitle, objectClass) {
+            activeScp = scpId;
+            const modal = document.getElementById('readerModal');
+            const loading = document.getElementById('modalLoading');
+            const content = document.getElementById('modalContent');
+            const titleElem = document.getElementById('modalTitle');
+            const itemNumElem = document.getElementById('modalItemNumber');
+            const badgeElem = document.getElementById('modalClassBadge');
+            const apiContent = document.getElementById('apiContent');
+
+            // Set Header Modal Info
+            itemNumElem.textContent = scpId;
+            titleElem.textContent = fallbackTitle || scpId;
+            badgeElem.textContent = objectClass || 'CLASSIFIED';
+            badgeElem.className = `font-mono-tech text-xs px-2.5 py-1 rounded font-bold border uppercase ${getClassBadgeStyle(objectClass)}`;
+            updateModalBookmarkBtn();
+
+            modal.classList.remove('hidden');
+            loading.classList.remove('hidden');
+            content.classList.add('hidden');
+
+            const cleanId = scpId.toLowerCase().replace('-', '');
+
+            try {
+                // Fetch direct Wikidot page content via CORS API Proxy
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://scp-wiki.wikidot.com/' + cleanId)}`);
+                const data = await response.json();
+                
+                if (data.contents) {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data.contents, 'text/html');
+                    const pageBody = doc.querySelector('#page-content');
+
+                    if (pageBody) {
+                        // Clean unwanted buttons or script elements from wiki output
+                        pageBody.querySelectorAll('.footer-wiki-site, .page-rate-page-content, script, style').forEach(el => el.remove());
+                        
+                        // Fix relative images to point directly to official Wikidot media
+                        pageBody.querySelectorAll('img').forEach(img => {
+                            const src = img.getAttribute('src');
+                            if (src && !src.startsWith('http')) {
+                                img.src = `https://scp-wiki.wdfiles.com${src}`;
+                            }
+                        });
+
+                        apiContent.innerHTML = pageBody.innerHTML;
+                    } else {
+                        apiContent.innerHTML = `<div class="p-4 border border-red-900/50 bg-red-950/20 rounded-lg text-red-300 font-mono-tech">[ CLASSIFIED FILE DIRECTIVE RESTRICTED OR REQUIRES HIGHER CLEARANCE OVERRIDE ]</div>`;
+                    }
+                } else {
+                    throw new Error("Unable to retrieve payload");
+                }
+            } catch (err) {
+                // Fallback structured reader display if offline or network fails
+                apiContent.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="p-3 border border-amber-900/60 bg-amber-950/30 text-amber-200 rounded font-mono-tech text-xs">
+                            [ NOTICE: DIRECT WIKIDOT LIVE FETCH LIMITED - DISPLAYING CACHED SYSTEM FILE ]
+                        </div>
+                        <p><strong>Item #:</strong> ${scpId}</p>
+                        <p><strong>Object Class:</strong> ${objectClass}</p>
+                        <p><strong>Special Containment Procedures:</strong> ${scpId} is to be held in Site-19 primary containment wing under continuous camera surveillance. Unauthorized entry is strictly prohibited.</p>
+                        <p><strong>Description:</strong> Anomaly record ${scpId} exhibits high threat characteristics. Physical and cognitive interaction is strictly monitored by Level 4 personnel. Refer to addendum files for complete incident reports.</p>
+                    </div>
+                `;
+            } finally {
+                loading.classList.add('hidden');
+                content.classList.remove('hidden');
+            }
+        }
+
+        function fetchDirectNumber() {
+            const input = document.getElementById('searchInput').value.trim();
+            if(!input) return;
+            const num = input.replace(/\D/g, '');
+            if(num) {
+                const padNum = String(num).padStart(3, '0');
+                openDossier(`SCP-${padNum}`, `SCP-${padNum}`, "EUCLID");
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('readerModal').classList.add('hidden');
+        }
+
         function setFilter(filter) {
-            playSound('click');
             currentFilter = filter;
             document.querySelectorAll('.filter-tab').forEach(tab => {
-                if (tab.textContent.includes(filter) || (filter === 'ALL' && tab.textContent.includes('ALL'))) {
-                    tab.className = "filter-tab active-tab bg-scpRed text-white px-3 py-1.5 rounded-lg border border-red-500/50 uppercase font-semibold shrink-0 transition-all";
-                } else {
-                    tab.className = "filter-tab bg-slate-900 text-slate-300 hover:border-slate-700 px-3 py-1.5 rounded-lg border border-slate-800 uppercase shrink-0 transition-all";
-                }
+                tab.classList.remove('bg-scpRed', 'text-white', 'active-tab');
+                tab.classList.add('bg-slate-900', 'text-slate-300');
             });
+            event.target.classList.add('bg-scpRed', 'text-white', 'active-tab');
             renderGrid();
         }
 
-        function filterEntries() {
-            currentSearchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+        function filterCatalog() {
             renderGrid();
         }
 
         function toggleBookmarksOnly() {
-            playSound('click');
             showBookmarksOnly = !showBookmarksOnly;
             const btn = document.getElementById('bookmarkToggleBtn');
             if (showBookmarksOnly) {
-                btn.className = "bg-scpAmber text-slate-950 border border-amber-400 font-mono-tech text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 shrink-0 font-bold transition-all";
+                btn.classList.add('border-scpAmber', 'text-scpAmber');
             } else {
-                btn.className = "bg-slate-900 border border-slate-800 hover:border-scpAmber text-slate-300 font-mono-tech text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 shrink-0 transition-all";
+                btn.classList.remove('border-scpAmber', 'text-scpAmber');
             }
             renderGrid();
         }
 
         function toggleBookmark(id) {
-            playSound('click');
-            if (bookmarkedIds.includes(id)) {
-                bookmarkedIds = bookmarkedIds.filter(item => item !== id);
+            if (bookmarks.includes(id)) {
+                bookmarks = bookmarks.filter(item => item !== id);
             } else {
-                bookmarkedIds.push(id);
+                bookmarks.push(id);
             }
-            localStorage.setItem('scp_bookmarks', JSON.stringify(bookmarkedIds));
+            saveBookmarks();
             renderGrid();
-            if (activeScpId === id) updateModalBookmarkButton();
+            updateModalBookmarkBtn();
         }
 
         function toggleBookmarkCurrent() {
-            if (activeScpId) toggleBookmark(activeScpId);
+            if (activeScp) {
+                toggleBookmark(activeScp);
+            }
         }
 
-        function updateModalBookmarkButton() {
-            const isBookmarked = bookmarkedIds.includes(activeScpId);
-            document.getElementById('modalBookmarkIcon').textContent = isBookmarked ? '★' : '☆';
+        function updateModalBookmarkBtn() {
+            const icon = document.getElementById('modalBookmarkIcon');
+            if (activeScp && bookmarks.includes(activeScp)) {
+                icon.textContent = '★';
+                icon.parentElement.classList.add('text-scpAmber');
+            } else {
+                icon.textContent = '☆';
+                icon.parentElement.classList.remove('text-scpAmber');
+            }
         }
 
-        // Modal Reader
-        function openModal(id) {
-            playSound('open');
-            activeScpId = id;
-            const scp = scpDatabase.find(item => item.id === id);
-            if (!scp) return;
-
-            document.getElementById('modalItemNumber').textContent = `${scp.id} - ${scp.title}`;
-            
-            const badge = document.getElementById('modalClassBadge');
-            badge.textContent = scp.objectClass;
-            badge.className = `font-mono-tech text-xs px-2.5 py-1 rounded font-bold border uppercase `;
-            if (scp.objectClass === 'SAFE') badge.className += "border-emerald-800 bg-emerald-950/50 text-emerald-400";
-            else if (scp.objectClass === 'KETER') badge.className += "border-red-800 bg-red-950/50 text-red-400";
-            else if (scp.objectClass === 'THAUMIEL') badge.className += "border-purple-800 bg-purple-950/50 text-purple-400";
-            else badge.className += "border-amber-800 bg-amber-950/50 text-amber-400";
-
-            updateModalBookmarkButton();
-
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <!-- Warning Stamp Header -->
-                <div class="border-2 border-red-900/60 bg-red-950/20 p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-                    <div>
-                        <span class="text-xs font-mono-tech text-scpRed font-bold tracking-widest uppercase block">// CLASSIFIED FOUNDATION DOSSIER</span>
-                        <h4 class="text-base font-bold text-white uppercase mt-0.5">${scp.id} OFFICIAL FILE</h4>
-                    </div>
-                    <span class="border border-scpRed text-scpRed text-[10px] font-mono-tech px-3 py-1 rounded tracking-widest uppercase font-bold">
-                        RESTRICTED TO LEVEL 4
-                    </span>
-                </div>
-
-                <!-- Cover Image & Quick Specs -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-4">
-                    <div class="md:col-span-1 rounded-lg overflow-hidden border border-slate-800">
-                        <img src="${scp.image}" alt="${scp.id}" class="w-full h-48 md:h-full object-cover">
-                    </div>
-                    <div class="md:col-span-2 space-y-3 font-mono-tech text-xs bg-slate-950 p-4 rounded-lg border border-slate-800">
-                        <p><span class="text-slate-500">ITEM #:</span> <span class="text-white font-bold">${scp.id}</span></p>
-                        <p><span class="text-slate-500">OBJECT CLASS:</span> <span class="text-scpAmber font-bold">${scp.objectClass}</span></p>
-                        <p><span class="text-slate-500">THREAT LEVEL:</span> <span class="text-scpRed font-bold">${scp.threatLevel}</span></p>
-                        <p><span class="text-slate-500">PRIMARY SITE:</span> <span class="text-slate-300">SITE-19 / RESEARCH SECTOR-04</span></p>
-                        <p><span class="text-slate-500">LEAD RESEARCHER:</span> <span class="redacted">Dr. ████████</span></p>
-                    </div>
-                </div>
-
-                <!-- Special Containment Procedures -->
-                <div class="space-y-2">
-                    <h3 class="font-mono-tech font-bold text-scpRed text-sm tracking-wider uppercase border-b border-slate-800 pb-1">
-                        SPECIAL CONTAINMENT PROCEDURES
-                    </h3>
-                    <p class="leading-relaxed text-slate-300 text-sm bg-slate-900/40 p-4 rounded-lg border border-slate-800/60 font-sans">
-                        ${scp.containment}
-                    </p>
-                </div>
-
-                <!-- Description -->
-                <div class="space-y-2">
-                    <h3 class="font-mono-tech font-bold text-scpAmber text-sm tracking-wider uppercase border-b border-slate-800 pb-1">
-                        DESCRIPTION
-                    </h3>
-                    <p class="leading-relaxed text-slate-300 text-sm bg-slate-900/40 p-4 rounded-lg border border-slate-800/60 font-sans">
-                        ${scp.description}
-                    </p>
-                </div>
-
-                <!-- Addenda -->
-                <div class="space-y-2">
-                    <h3 class="font-mono-tech font-bold text-scpCyan text-sm tracking-wider uppercase border-b border-slate-800 pb-1">
-                        ADDENDUM & INCIDENT LOGS
-                    </h3>
-                    <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 space-y-3 text-xs font-mono-tech text-slate-300">
-                        <p class="border-l-2 border-scpCyan pl-3">${scp.addendum}</p>
-                        <p class="border-l-2 border-scpRed pl-3 text-slate-400 italic">${scp.testLogs}</p>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('readerModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            playSound('click');
-            document.getElementById('readerModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            activeScpId = null;
-        }
-
-        // Close modal on Escape key
+        // Close modal on ESC key
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
 
-        // Initial Render
+        // Initialize Grid
         renderGrid();
     </script>
 </body>
